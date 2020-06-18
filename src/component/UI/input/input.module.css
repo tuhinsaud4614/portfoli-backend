@@ -1,0 +1,30 @@
+.InputLabel,
+.InputField,
+.InputField:focus {
+  font-size: 1.5rem;
+  color: var(--secondary-color);
+  border-radius: 0;
+  transition: all 0.3s ease-in-out;
+}
+
+.InputLabel {
+  animation: example 2s;
+}
+
+@keyframes example {
+  0% {
+    transform: translateY(-1rem);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.InputField::placeholder {
+  color: var(--secondary-color);
+  opacity: 0.5;
+}
+
+.InputValidField {
+  font-size: 1.3rem;
+}

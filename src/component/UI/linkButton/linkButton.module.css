@@ -1,0 +1,21 @@
+.LinkButton {
+  background: #575996;
+  color: #e3f2fd;
+  font-size: 1.3rem;
+  box-shadow: 0 0.5rem 1rem rgba(87, 89, 150, 0.15);
+}
+
+.LinkButton:hover {
+  box-shadow: 0 0.5rem 1rem #e3f2fd;
+  background: var(--secondary-color);
+  opacity: 0.8;
+  color: var(--primary-color);
+}
+
+.LinkButton:disabled {
+  background: rgba(var(--accent-color-rgb), 0.3);
+  color: gray;
+  cursor: not-allowed;
+  font-size: 1.3rem;
+  box-shadow: 0 0.5rem 1rem rgba(87, 89, 150, 0.15);
+}

@@ -1,0 +1,34 @@
+.NestedSidebarItems {
+  font-size: 1.35rem;
+  padding: 0.5rem;
+  color: var(--accent-color);
+  transition: all 0.4s linear;
+}
+.NestedSidebarItems > p {
+    cursor: pointer;
+}
+.NestedSidebarItems > p > i {
+  transition: all 0.2s linear;
+  transform: rotate(0);
+}
+
+.NestedSidebarItems:hover {
+  background-color: rgba(var(--accent-color-rgb), 0.5);
+  color: var(--secondary-color);
+}
+
+.NestedSidebarItems > p > span {
+  transition: all .2s linear;
+}
+
+.Active {
+  background-color: rgba(var(--accent-color-rgb), 0.5);
+  color: var(--secondary-color);
+  position: relative;
+}
+
+
+
+.Active > p > span {
+  transform: rotate(-90deg);
+}

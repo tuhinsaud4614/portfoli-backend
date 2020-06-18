@@ -1,0 +1,57 @@
+.Auth {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 0.7rem;
+  }
+  
+  .AuthForm {
+    /* background-color: #575996; */
+    /* background-color: #e3f2fd; */
+    border-radius: 0.4rem;
+  }
+  
+  .AuthFormHeader {
+    color: #e3f2fd;
+    font-weight: bolder;
+    background-color: #575996;
+    font-size: 1.7rem;
+    text-transform: uppercase;
+    user-select: none;
+  }
+  
+  .AuthFormGroup > label,
+  .AuthFormGroup > input {
+    font-size: 1.5rem;
+    color: #575996;
+    border-radius: 0;
+  }
+  
+  .AuthFormGroup > div {
+    font-size: 1.3rem;
+  }
+  
+  .AuthSubmitBtn {
+    background: #575996;
+    color: #e3f2fd;
+    font-size: 1.3rem;
+    box-shadow: 0 0.5rem 1rem rgba(87, 89, 150, 0.15);
+  }
+  
+  .AuthSubmitBtn:hover {
+    box-shadow: 0 0.5rem 1rem #e3f2fd;
+  }
+  
+  .AuthSubmitBtn:disabled {
+    background: #e3f2fd;
+    color: gray;
+    cursor: not-allowed;
+    font-size: 1.3rem;
+    box-shadow: 0 0.5rem 1rem rgba(87, 89, 150, 0.15);
+  }
+  
+  .Loading {
+    background: #575996;
+  }

@@ -1,0 +1,26 @@
+.TRow {
+    font-size: 1.2rem;
+}
+
+.EditLink {
+    font-size: inherit;
+    background-color: #ffc107;
+    color: #000;
+}
+
+.EditLink:hover {
+    background-color: #e9bc35;
+    color: #222222;
+}
+
+.DeleteLink {
+    font-size: inherit;
+    background-color: #dc3545;
+    color: #fff;
+    cursor: pointer;
+}
+
+.DeleteLink:hover {
+    background-color: #ce5864;
+    color: #ddd;
+}

@@ -1,0 +1,45 @@
+.DataTable {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.DataTableHeader {
+  background: #eee;
+}
+
+.DataTableEntry {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.DataTableEntry > input {
+  margin: 0 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: inherit;
+  background: #ddd;
+  box-shadow: none;
+  border: 1px solid #ccc;
+}
+
+.DataTableQuery {
+  background: #ddd;
+  font-size: 1.2rem;
+  border: 1px solid #ccc;
+}
+
+.DataTableQuery > input {
+  padding: 0.25rem 0.5rem;
+  font-size: inherit;
+  box-shadow: none;
+  border: none;
+  min-width: 160px;
+}
+
+.DataTableQuery > span {
+  padding: 0.25rem 0.8rem;
+  transition: all 0.3s ease-in;
+}
+
+.DataTableQuery > span:hover {
+  background-color: rgba(128, 128, 128, 0.3);
+}

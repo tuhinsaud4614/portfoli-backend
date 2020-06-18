@@ -1,0 +1,22 @@
+.TechnologyNav {
+  background: var(--primary-color);
+}
+
+.TechnologyNavItem {
+  font-size: 1.3rem;
+  font-weight: bold;
+  text-decoration: none;
+  background: var(--accent-color);
+  color: var(--primary-color);
+  transition: all .3s ease-in;
+}
+
+.TechnologyNavItem:hover,
+.Active {
+  background: rgba(var(--accent-color-rgb), 0.5);
+  color: var(--secondary-color);
+}
+
+.TechnologyNavItem:not(:last-child) {
+  margin-right: 1.2rem;
+}

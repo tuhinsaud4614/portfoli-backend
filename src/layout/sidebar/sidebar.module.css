@@ -1,0 +1,13 @@
+.Sidebar {
+  height: calc(100vh - 56.25px);
+  background: #e3f2fd;
+  backface-visibility: hidden;
+}
+
+.SidebarLogo {
+    display: block;
+    height: 40px;
+    width: 100%;
+    background-color: #575996;
+    padding: 0.4rem;
+}

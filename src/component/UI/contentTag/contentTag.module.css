@@ -1,0 +1,76 @@
+.ContentTag {
+  padding: 1.4rem 1rem;
+  width: 100%;
+  background-color: var(--primary-color);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.ContentTag:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  transform: translateY(-0.3rem);
+}
+
+.ContentTag > div {
+  display: inline-block;
+  line-height: 6.4rem;
+  text-align: center;
+  font-size: 2.8rem;
+  color: var(--primary-color);
+  width: 6.4rem;
+  height: 6.4rem;
+  background-color: rgba(var(--accent-color-rgb), 0.5);
+  border-radius: 3.2rem;
+  animation: fadeIn 2s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  75% {
+    transform: rotate(10deg);
+  }
+
+  100% {
+    transform: rotate(-10deg);
+  }
+}
+
+.ContentTag > h3 {
+  text-align: end;
+  margin: 0;
+  font-size: 1.7rem;
+  font-weight: 300;
+  color: var(--secondary-color);
+  animation: bounce 1s linear;
+}
+
+.ContentTag > h3 > strong {
+  font-weight: 600;
+}
+
+.ContentTag > h3 > small {
+  font-size: 62.5%;
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateY(-0.6rem);
+  }
+
+  75% {
+    transform: translateY(0.25rem);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,10 @@
+.SidebarItems {
+  padding: 0.4rem;
+}
+
+.SidebarItems > p {
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+  color: #32bd50;
+}

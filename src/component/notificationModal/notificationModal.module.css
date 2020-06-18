@@ -1,0 +1,65 @@
+.NotificationModal {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  cursor: default;
+}
+
+.NotificationModalDialog {
+  position: absolute;
+  max-height: 85vh;
+  width: 36rem;
+  right: 9.2rem;
+  top: 4rem;
+  background: #e3f2fd;
+  animation: dialogPosition 0.4s linear;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+@keyframes dialogPosition {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+.NotificationModalDialogTitleBar {
+  padding: 0.6rem 0.4rem;
+}
+
+.NotificationModalDialogTitleBar > h5 {
+  margin: 0;
+}
+
+.NotificationModalDialogTitleBar > span {
+  color: #575996;
+  cursor: pointer;
+}
+.NotificationModalDialogTitleBar > span:hover {
+  text-decoration: #3237db;
+}
+
+.DeActive {
+  display: none;
+}
+
+.NotificationModalDialog::-webkit-scrollbar {
+  width: 0.7rem;
+}
+
+/* Track */
+.NotificationModalDialog::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px #ccc;
+  border-radius: 0.25rem;
+}
+
+/* Handle */
+.NotificationModalDialog::-webkit-scrollbar-thumb {
+  background: #575996;
+  border-radius: 0.25rem;
+}

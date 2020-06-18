@@ -1,0 +1,15 @@
+.LanguageItem {
+  background: #575996;
+  color: #e3f2fd;
+  font-size: 1.3rem;
+}
+
+.LanguageItem:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.LanguageDelete {
+  font-size: 1.3rem;
+  color: #ffffff;
+  cursor: pointer;
+}

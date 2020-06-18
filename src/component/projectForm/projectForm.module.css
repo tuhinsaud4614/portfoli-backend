@@ -1,0 +1,13 @@
+.AddProjectFormHeader {
+  color: var(--primary-color);
+  font-weight: bolder;
+  background-color: rgba(var(--accent-color-rgb), 0.5);
+  font-size: 1.7rem;
+  text-transform: uppercase;
+  user-select: none;
+  border-bottom: none;
+}
+
+.AddProjectFormBody {
+  background-color: var(--primary-color);
+}

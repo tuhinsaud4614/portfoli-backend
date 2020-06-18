@@ -1,0 +1,22 @@
+.Pagination {
+  background: #eee;
+}
+
+.Pagination li {
+  cursor: pointer !important;
+}
+
+.Active {
+  z-index: 2;
+  color: var(--secondary-color);
+  background-color: #e9ecef;
+  border-color: #dee2e6;
+}
+
+.Disabled,
+.Disabled:hover {
+  color: gray;
+  background-color: #ccc;
+  border-color: #ccc;
+  cursor: not-allowed;
+}

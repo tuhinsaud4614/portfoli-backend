@@ -1,0 +1,43 @@
+.SidebarItem {
+  font-size: 1.4rem;
+  padding: 0.5rem;
+  /* background-color: var(--primary-color); */
+  color: var(--secondary-color);
+  transition: all 0.4s linear;
+}
+
+.SidebarItem:hover {
+  opacity: 0.8;
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+.Active {
+  background-color: var(--secondary-color);
+  color: var(--primary-color);
+  text-decoration: none;
+  position: relative;
+}
+
+.Active::after {
+  content: "";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0.5rem;
+  height: 100%;
+  background-color: var(--accent-color);
+}
+
+.SidebarItem i {
+  display: block;
+  width: 2rem;
+  text-align: center;
+}
+
+.SidebarItem > p {
+  margin: 0;
+  margin-left: 1rem;
+}
