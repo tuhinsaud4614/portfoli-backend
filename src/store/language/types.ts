@@ -8,7 +8,6 @@ export enum LanguageActionTypes {
   LANGUAGES_ACTION_FAIL = "LANGUAGES_ACTION_FAIL",
   CREATE_LANGUAGE = "CREATE_LANGUAGE",
   DELETE_LANGUAGE = "DELETE_LANGUAGE",
-  PROJECTS_ACTION_SUCCESS = "PROJECTS_ACTION_SUCCESS",
   CREATE_LANGUAGE_START = "CREATE_LANGUAGE_START",
 }
 
@@ -16,6 +15,8 @@ export enum LanguageActionTypes {
 export enum LanguageErrorTypes {
   FETCH_LANGUAGES_ERROR = "Language fetching failed!",
   LANGUAGE_CREATION_ERROR = "Language creation failed!",
+  LANGUAGE_ALREADY_EXIST_ERROR = "Language already exist!",
+  LANGUAGE_NOT_EXIST_ERROR = "Language not exist!",
   LANGUAGE_DELETING_ERROR = "Language deleting failed!",
 }
 

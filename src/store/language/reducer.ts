@@ -44,7 +44,7 @@ export default function reducer(
     case LanguageActionTypes.CREATE_LANGUAGE:
       return {
         ...state,
-        languages: [action.language, ...state.languages],
+        languages: [...state.languages, action.language],
       };
     case LanguageActionTypes.DELETE_LANGUAGE:
       const newLanguages = state.languages.filter(

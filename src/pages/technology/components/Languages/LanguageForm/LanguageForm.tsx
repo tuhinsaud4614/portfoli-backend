@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Language } from "../../../../../model";
 import { checkValidation } from "../../../../../utility/formUtility";
 import ProgressIndicator from "../../../../../component/UI/progressIndicator/progressIndicator";
 import SubmitButton from "../../../../../shared/components/button/SubmitButton";
@@ -40,7 +39,7 @@ const LanguageForm: React.FC<Props> = ({ isSubmitting }) => {
 
   const submitHandler = (event: React.FormEvent<EventTarget>): void => {
     event.preventDefault();
-    dispatch(createLanguage({ id: "", name: formData.value }));
+    dispatch(createLanguage({ name: formData.value.trim() }));
     setFormData({
       value: "",
       touched: false,
@@ -83,4 +82,4 @@ const LanguageForm: React.FC<Props> = ({ isSubmitting }) => {
   );
 };
 
-export default React.memo(LanguageForm);
+export default LanguageForm;

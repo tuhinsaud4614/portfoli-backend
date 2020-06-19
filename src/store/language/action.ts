@@ -6,6 +6,8 @@ import {
   LanguageActions,
   LanguageErrorTypes,
 } from "./types";
+import { AppState } from "..";
+
 import { Language } from "../../model";
 
 const convertDataToLanguages = (data: {
@@ -50,6 +52,11 @@ export const createLanguageStart = (): LanguageActions => ({
   isAdding: true,
 });
 
+export const saveLanguage = (lang: Language): LanguageActions => ({
+  type: LanguageActionTypes.CREATE_LANGUAGE,
+  language: lang,
+});
+
 export const fetchLanguages = () => {
   return async (dispatch: Dispatch) => {
     dispatch(languagesActionStart());
@@ -69,20 +76,27 @@ export const fetchLanguages = () => {
   };
 };
 
-export const createLanguage = (language: Language) => {
-  return async (dispatch: Dispatch) => {
+export const createLanguage = (language: { name: string }) => {
+  return async (dispatch: Dispatch, getState: () => AppState) => {
     dispatch(createLanguageStart());
     try {
-      await axios.post(
-        "https://react-portfolio-1a7f5.firebaseio.com/languages.json",
-        JSON.stringify({ name: language.name })
+      const langFindIndex = getState().languages.languages.findIndex(
+        (l) => l.name.toLowerCase() === language.name.toLowerCase()
       );
-      dispatch({
-        type: LanguageActionTypes.CREATE_LANGUAGE,
-        language: language,
-      });
-
-      dispatch(languagesActionSuccess());
+      if (langFindIndex < 0) {
+        const response = await axios.post(
+          "https://react-portfolio-1a7f5.firebaseio.com/languages.json",
+          JSON.stringify(language)
+        );
+        dispatch(
+          saveLanguage({ id: response.data[`name`], name: language.name })
+        );
+        dispatch(languagesActionSuccess());
+      } else {
+        dispatch(
+          languagesActionFail(LanguageErrorTypes.LANGUAGE_ALREADY_EXIST_ERROR)
+        );
+      }
     } catch (error) {
       dispatch(languagesActionFail(LanguageErrorTypes.LANGUAGE_CREATION_ERROR));
     }
@@ -93,15 +107,22 @@ export const deleteLanguage = (id: string) => {
   return async (dispatch: Dispatch) => {
     dispatch(languagesActionStart());
     try {
-      await axios.delete(
+      const response = await axios.delete(
         `https://react-portfolio-1a7f5.firebaseio.com/languages/${id}.json`
       );
+      console.log(response);
       dispatch({
         type: LanguageActionTypes.DELETE_LANGUAGE,
         id: id,
       });
       dispatch(languagesActionSuccess());
+      // if (response.status === 200) {
+      // } else {
+      //   languagesActionFail(LanguageErrorTypes.LANGUAGE_NOT_EXIST_ERROR);
+      // }
     } catch (error) {
+      console.log('error', error);
+      
       dispatch(languagesActionFail(LanguageErrorTypes.LANGUAGE_DELETING_ERROR));
     }
   };

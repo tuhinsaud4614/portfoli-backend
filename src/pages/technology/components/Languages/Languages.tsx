@@ -30,8 +30,6 @@ const Language: React.FC<Props> = () => {
 
   const deleteHandler = (id: string): void => {
     dispatch(deleteLanguage(id));
-
-    return;
   };
 
   return (

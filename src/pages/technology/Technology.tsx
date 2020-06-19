@@ -4,10 +4,14 @@ import { NavLink } from "react-router-dom";
 
 import RoutePathName from "../routePathName";
 import classes from "./Technology.module.css";
-import WebDevelopment from "./WebDevelopment/WebDevelopment";
-import MobileDevelopment from "./MobileDevelopment/MobileDevelopment";
+import Development from "./Development/Development";
 import Language from "./components/Languages/Languages";
 import NotFound from "../notFound/notFound";
+import {
+  faGlobe,
+  faMobileAlt,
+} from "@fortawesome/free-solid-svg-icons";
+import { TechnologyType } from "../../model";
 
 const Technology: React.FC = () => {
   return (
@@ -44,19 +48,31 @@ const Technology: React.FC = () => {
           exact
           path={RoutePathName.ADMIN_OWNER_TECHNOLOGY_WEB_DEVELOPMENT}
         >
-          <WebDevelopment />
+          <Development
+            icon={faGlobe}
+            title="Web Development"
+            technologyType={TechnologyType.WEB_DEVELOPMENT}
+          />
         </Route>
         <Route
           exact
           path={RoutePathName.ADMIN_OWNER_TECHNOLOGY_MOBILE_DEVELOPMENT}
         >
-          <MobileDevelopment />
+          <Development
+            icon={faMobileAlt}
+            title="Mobile Development"
+            technologyType={TechnologyType.MOBILE_DEVELOPMENT}
+          />
         </Route>
         <Route
           exact
           path={RoutePathName.ADMIN_OWNER_TECHNOLOGY_DATABASE_DEVELOPMENT}
         >
-          <p>ADMIN_OWNER_TECHNOLOGY_DATABASE_DEVELOPMENT</p>
+          <Development
+            icon={faGlobe}
+            title="Database Development"
+            technologyType={TechnologyType.DATABASE_DEVELOPMENT}
+          />
         </Route>
         <Route exact path={RoutePathName.ADMIN_OWNER_TECHNOLOGY}>
           <p

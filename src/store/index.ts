@@ -3,11 +3,15 @@ import thunk, { ThunkMiddleware } from "redux-thunk";
 
 import projectReducer from "./project/reducer";
 import languageReducer from "./language/reducer";
+import platformReducer from "./platform/reducer";
+import techniqueReducer from "./technique/reducer";
 import { ProjectActions } from "./project/types";
 
 export const rootReducer = combineReducers({
   projects: projectReducer,
-  languages: languageReducer
+  languages: languageReducer,
+  platforms: platformReducer,
+  techniques: techniqueReducer,
 });
 
 export type AppActions = ProjectActions;
