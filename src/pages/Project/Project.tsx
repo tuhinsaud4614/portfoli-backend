@@ -3,8 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { fetchProjects, deleteProject } from "../../store/project/action";
 import { ProjectState, ProjectErrorTypes } from "../../store/project/types";
-import ProjectModel from "../../model/project";
-import Skill from "../../model/skill";
 
 import RoutePathName from "../routePathName";
 import ProgressIndicator from "../../component/UI/progressIndicator/progressIndicator";
@@ -12,13 +10,7 @@ import DataTable from "../../component/dataTable/dataTable";
 import LinkButton from "../../component/UI/linkButton/linkButton";
 import { AppState } from "../../store";
 import AlertBox from "../../component/UI/alertBox/alertBox";
-
-// interface Props {
-//   fetchProjects: () => void;
-//   deleteProject: (id: string) => void;
-//   projects: ProjectModel[];
-//   loading: boolean;
-// }
+import { Project as ProjectModel, Technique } from "../../model";
 
 type ChildCmp = React.FC | string;
 
@@ -29,7 +21,7 @@ type DataTableDataType = {
 
 const Project: React.FC = () => {
   const dispatch = useDispatch();
-  const { isLoading, projects, error } = useSelector<AppState>(
+  const { loading, projects, error } = useSelector<AppState>(
     (state) => state.projects
   ) as ProjectState;
 
@@ -44,7 +36,9 @@ const Project: React.FC = () => {
         cmp: [
           () => <a href="!#">{project.name}</a>,
           project.platform,
-          project.skills.map((skill: Skill) => skill.name).join(", "),
+          project.techniques
+            .map((technique: Technique) => technique.name)
+            .join(", "),
           () => (
             <img
               style={{ width: "60px" }}
@@ -65,7 +59,7 @@ const Project: React.FC = () => {
 
   return (
     <React.Fragment>
-      {isLoading ? (
+      {loading ? (
         <div
           className="d-flex align-items-center justify-content-center"
           style={{ height: "100%" }}
@@ -90,7 +84,13 @@ const Project: React.FC = () => {
           {dataTableData.length > 0 ? (
             <DataTable
               data={dataTableData}
-              columns={["Name", "Platform", "Skills", "Image", "Description"]}
+              columns={[
+                "Name",
+                "Platform",
+                "Techniques",
+                "Image",
+                "Description",
+              ]}
               deleteConfig={{
                 method: deleteProjectHandler,
               }}

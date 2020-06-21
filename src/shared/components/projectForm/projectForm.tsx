@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import validator from "validator";
 
-import Input from "../UI/input/input";
-import Button from "../UI/button/button";
-import Skill from "../../model/skill";
-import TaggedInput from "../UI/taggedInput/taggedInput";
-import Project, { ProjectMapType } from "../../model/project";
-import ProgressIndicator from "../UI/progressIndicator/progressIndicator";
+import { Technique, Project, Platform } from "../../../model";
+import Input from "../../../component/UI/input/input";
+import Button from "../../../component/UI/button/button";
+import TaggedInput from "../../../component/UI/taggedInput/taggedInput";
+import ProgressIndicator from "../../../component/UI/progressIndicator/progressIndicator";
 import classes from "./projectForm.module.css";
 
 interface FormConfig {
@@ -34,19 +33,26 @@ interface FormState {
       isValid: boolean;
     };
   };
-  skills: Skill[];
+  techniques: Technique[];
   formIsValid: boolean;
 }
 
 interface Props {
   title: string;
-  skills: Skill[];
+  techniques: Technique[];
+  platforms: Platform[];
   submitted: (project: Project) => void;
   isSaving: boolean;
   project?: Project;
 }
 
 const ProjectForm: React.FC<Props> = (props) => {
+  const platformValues: {
+    value: string;
+    displayValue: string;
+  }[] = props.platforms.map((p) => {
+    return { value: p.name, displayValue: p.name };
+  });
   const [formState, setFormState] = useState<FormState>({
     addProjectForm: {
       name: {
@@ -70,11 +76,12 @@ const ProjectForm: React.FC<Props> = (props) => {
         label: "Project Platform/Type",
         config: {
           options: [
-            { value: "React JS", displayValue: "React JS" },
-            { value: "React Native", displayValue: "React Native" },
-            { value: "MERN", displayValue: "MERN" },
-            { value: "Flutter", displayValue: "Flutter" },
-            { value: "TKinter", displayValue: "TKinter" },
+            ...platformValues,
+            // { value: "React JS", displayValue: "React JS" },
+            // { value: "React Native", displayValue: "React Native" },
+            // { value: "MERN", displayValue: "MERN" },
+            // { value: "Flutter", displayValue: "Flutter" },
+            // { value: "TKinter", displayValue: "TKinter" },
           ],
         },
         validator: {
@@ -128,7 +135,7 @@ const ProjectForm: React.FC<Props> = (props) => {
         isValid: false,
       },
     },
-    skills: [],
+    techniques: [],
     formIsValid: false,
   });
 
@@ -147,12 +154,18 @@ const ProjectForm: React.FC<Props> = (props) => {
           newFormState.addProjectForm[key].touched = true;
         }
       }
-      newFormState.skills = props.project.skills;
+      newFormState.techniques = props.project.techniques;
       newFormState.formIsValid = true;
       setFormState(newFormState);
     } else {
       return;
     }
+    setFormState((prevFormState: FormState) => ({
+      ...prevFormState,
+      addProjectForm: {
+        ...prevFormState.addProjectForm,
+      },
+    }));
   }, []);
 
   const checkValidation = (rules: FormValidator, value: string): boolean => {
@@ -199,24 +212,25 @@ const ProjectForm: React.FC<Props> = (props) => {
     setFormState({
       addProjectForm: newProjectData,
       formIsValid: formIsValid,
-      skills: formState.skills,
+      techniques: formState.techniques,
     });
   };
 
-  const tagInputHandler = (skills: Skill[]): void => {
-    setFormState({ ...formState, skills: skills });
+  const tagInputHandler = (techniques: Technique[]): void => {
+    // console.log(techniques);
+    setFormState({ ...formState, techniques: techniques });
   };
 
   const submitHandler = (): void => {
-    const newProject = new Project(
-      new Date().getTime().toString(),
-      formState.addProjectForm.name.value,
-      formState.addProjectForm.projectType.value,
-      formState.skills,
-      formState.addProjectForm.projectUrl.value,
-      formState.addProjectForm.projectImgUrl.value,
-      formState.addProjectForm.description.value
-    );
+    const newProject: Project = {
+      id: "",
+      name: formState.addProjectForm.name.value,
+      platform: formState.addProjectForm.projectType.value,
+      techniques: formState.techniques,
+      url: formState.addProjectForm.projectUrl.value,
+      image: formState.addProjectForm.projectImgUrl.value,
+      description: formState.addProjectForm.description.value,
+    };
     props.submitted(newProject);
     // props.createProject(newProject);
   };
@@ -260,8 +274,8 @@ const ProjectForm: React.FC<Props> = (props) => {
         <div className={`mb-3 col-12 col-sm-6`}>
           <TaggedInput
             tagInputted={tagInputHandler}
-            data={props.skills}
-            valueData={formState.skills}
+            data={props.techniques}
+            valueData={formState.techniques}
           />
         </div>
       </div>
@@ -280,4 +294,4 @@ const ProjectForm: React.FC<Props> = (props) => {
   );
 };
 
-export default React.memo(ProjectForm);
+export default ProjectForm;

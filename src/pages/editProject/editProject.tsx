@@ -4,22 +4,21 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { createProject } from "../../store/project/action";
 import { ProjectState } from "../../store/project/types";
-import Project from "../../model/project";
-import ProjectForm from "../../component/projectForm/projectForm";
+import ProjectForm from "../../shared/components/projectForm/projectForm";
 import RoutePathName from "../routePathName";
 import { AppState } from "../../store";
-import { getSkillsFromProjects } from "../../utility/projectUtility";
 import AlertBox from "../../component/UI/alertBox/alertBox";
+import { Project } from "../../model";
 
 const EditProject: React.FC = () => {
   const routeHistory = useHistory();
   const dispatch = useDispatch();
 
-  const { isLoading, projects, error } = useSelector<AppState>(
-    (state) => state.projects
-  ) as ProjectState;
+  const { loading, projects, platforms, techniques, error } = useSelector<
+    AppState
+  >((state) => state.projects) as ProjectState;
 
-  const skills = getSkillsFromProjects(projects);
+  // const skills = getSkillsFromProjects(projects);
 
   const params = useParams<{ id: string }>();
 
@@ -32,17 +31,18 @@ const EditProject: React.FC = () => {
     (p: Project) => p.id === params[`id`]
   );
 
-  if (projectIndex < 0 && !isLoading) {
+  if (platforms.length === 0) {
     return <Redirect to={RoutePathName.ADMIN_OWNER_PROJECTS} />;
   } else {
     return (
       <div className={`p-3`}>
         {error && <AlertBox message="Editing project failure!" />}
         <ProjectForm
-          skills={skills.length > 0 ? skills : []}
+          platforms={platforms}
+          techniques={techniques.length > 0 ? techniques : []}
           title="Edit Project"
           submitted={submitHandler}
-          isSaving={isLoading}
+          isSaving={loading}
           project={projects[projectIndex]}
         />
       </div>

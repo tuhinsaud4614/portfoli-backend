@@ -23,13 +23,8 @@ export default function reducer(
       return {
         ...state,
         techniques: action.payload,
-      };
-    case TechniqueActionTypes.TECHNIQUES_ACTION_SUCCESS:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        isAdding: action.isAdding,
-        error: action.error,
+        isFetching: false,
+        error: null,
       };
     case TechniqueActionTypes.TECHNIQUES_ACTION_FAIL:
       return {
@@ -49,12 +44,19 @@ export default function reducer(
       return {
         ...state,
         techniques: [...state.techniques, action.technique],
+        isAdding: false,
+        error: null,
       };
     case TechniqueActionTypes.DELETE_TECHNIQUE:
       const newTechniques = state.techniques.filter(
         (value: Technique) => value.id !== action.id
       );
-      return { ...state, techniques: newTechniques };
+      return {
+        ...state,
+        techniques: newTechniques,
+        isFetching: false,
+        error: null,
+      };
 
     default:
       return state;

@@ -1,10 +1,15 @@
 import { Dispatch } from "redux";
 import axios from "axios";
 
+import {
+  Project,
+  ProjectWithoutId,
+  TechniqueWithoutId,
+  PlatformWithoutId,
+} from "../../model";
 import { ProjectActionTypes, ProjectActions, ProjectErrorTypes } from "./types";
-import Project, { ProjectMapType } from "../../model/project";
-// import Skill from "../../model/skill";
 import RoutePathName from "../../pages/routePathName";
+import { responseDataToData } from "../../utility";
 
 // const newSkills = (prevSkills: Skill[], currSkills: Skill[]) => {
 //   const tempSkills = [...prevSkills];
@@ -22,38 +27,25 @@ import RoutePathName from "../../pages/routePathName";
 //   return tempSkills;
 // };
 
-const convertDataToProjects = (data: {
-  [key: string]: ProjectMapType;
-}): Project[] => {
-  const newProjects: Project[] = [];
+// const convertDataToProjects = (data: {
+//   [key: string]: ProjectWithoutId;
+// }): Project[] => {
+//   const newProjects: Project[] = [];
 
-  for (const key in data) {
-    if (data.hasOwnProperty(key)) {
-      newProjects.push(
-        new Project(
-          key,
-          data[key].name,
-          data[key].platform,
-          data[key].skills,
-          data[key].url,
-          data[key].image,
-          data[key].description
-        )
-      );
-    }
-  }
-  return newProjects;
-};
+//   for (const key in data) {
+//     if (data.hasOwnProperty(key)) {
+//       newProjects.push({
+//         id: key,
+//         ...data[key],
+//       });
+//     }
+//   }
+//   return newProjects;
+// };
 
 export const projectsActionStart = (): ProjectActions => ({
   type: ProjectActionTypes.PROJECTS_ACTION_START,
   loading: true,
-});
-
-export const projectsActionSuccess = (): ProjectActions => ({
-  type: ProjectActionTypes.PROJECTS_ACTION_SUCCESS,
-  loading: false,
-  error: null,
 });
 
 export const projectsActionFail = (msg: ProjectErrorTypes): ProjectActions => ({
@@ -66,15 +58,33 @@ export const fetchProjects = () => {
   return async (dispatch: Dispatch) => {
     dispatch(projectsActionStart());
     try {
-      const response = await axios.get(
+      const responseProjects = await axios.get(
         "https://react-portfolio-1a7f5.firebaseio.com/projects.json"
       );
-      const newProjects = convertDataToProjects(response.data);
+      const responseTechniques = await axios.get(
+        "https://react-portfolio-1a7f5.firebaseio.com/technology/techniques.json"
+      );
+      const responsePlatforms = await axios.get(
+        "https://react-portfolio-1a7f5.firebaseio.com/technology/platforms.json"
+      );
+      // const newProjects = convertDataToProjects(response.data);
+      const newProjects = responseDataToData<ProjectWithoutId>(
+        responseProjects.data
+      );
+      const newTechniques = responseDataToData<TechniqueWithoutId>(
+        responseTechniques.data
+      );
+      const newPlatforms = responseDataToData<PlatformWithoutId>(
+        responsePlatforms.data
+      );
       dispatch({
         type: ProjectActionTypes.FETCH_PROJECTS,
-        payload: newProjects,
+        payload: {
+          projects: newProjects,
+          techniques: newTechniques,
+          platforms: newPlatforms
+        },
       });
-      dispatch(projectsActionSuccess());
     } catch (error) {
       dispatch(projectsActionFail(ProjectErrorTypes.FETCH_PROJECTS_ERROR));
     }
@@ -90,25 +100,27 @@ export const createProject = (
     dispatch(projectsActionStart());
     try {
       if (isEditMode) {
+        const projectId: string = project.id;
+        delete project.id;
         await axios.patch(
-          `https://react-portfolio-1a7f5.firebaseio.com/projects/${project.id}.json`,
-          JSON.stringify(project.toMap())
+          `https://react-portfolio-1a7f5.firebaseio.com/projects/${projectId}.json`,
+          JSON.stringify(project)
         );
         dispatch({
           type: ProjectActionTypes.UPDATE_PROJECT,
           project: project,
         });
       } else {
+        delete project.id;
         await axios.post(
           "https://react-portfolio-1a7f5.firebaseio.com/projects.json",
-          JSON.stringify(project.toMap())
+          JSON.stringify(project)
         );
         dispatch({
           type: ProjectActionTypes.CREATE_PROJECT,
           project: project,
         });
       }
-      dispatch(projectsActionSuccess());
       historyReplaced(RoutePathName.ADMIN_OWNER_PROJECTS);
     } catch (error) {
       dispatch(projectsActionFail(ProjectErrorTypes.PROJECT_CREATION_ERROR));
@@ -127,7 +139,6 @@ export const deleteProject = (id: string) => {
         type: ProjectActionTypes.DELETE_PROJECT,
         id: id,
       });
-      dispatch(projectsActionSuccess());
     } catch (error) {
       dispatch(projectsActionFail(ProjectErrorTypes.PROJECT_DELETING_ERROR));
     }

@@ -1,16 +1,16 @@
 import React from "react";
 import classes from "./tagList.module.css";
-import Skill from "../../../../model/skill";
+import { Technique } from "../../../../model";
 
 interface Props {
-  clicked: (value: Skill) => void;
-  skills: Skill[];
+  clicked: (value: Technique) => void;
+  skills: Technique[];
 }
 
 const TagList: React.FC<Props> = ({ clicked, skills }) => {
   return (
     <ul className={`list-group ${classes.TagList}`}>
-      {skills.map((item: Skill) => {
+      {skills.map((item: Technique) => {
         return (
           <li
             key={item.id}

@@ -4,7 +4,6 @@ import { Platform } from "../../model";
 export enum PlatformActionTypes {
   FETCH_PLATFORMS = "FETCH_PLATFORMS",
   PLATFORMS_ACTION_START = "PLATFORMS_ACTION_START",
-  PLATFORMS_ACTION_SUCCESS = "PLATFORMS_ACTION_SUCCESS",
   PLATFORMS_ACTION_FAIL = "PLATFORMS_ACTION_FAIL",
   CREATE_PLATFORM = "CREATE_PLATFORM",
   DELETE_PLATFORM = "DELETE_PLATFORM",
@@ -39,13 +38,6 @@ interface FetchPlatforms {
   payload: Platform[];
 }
 
-interface PlatformActionSuccess {
-  type: typeof PlatformActionTypes.PLATFORMS_ACTION_SUCCESS;
-  isFetching: boolean;
-  isAdding: boolean;
-  error: null;
-}
-
 interface PlatformActionFail {
   type: typeof PlatformActionTypes.PLATFORMS_ACTION_FAIL;
   isFetching: boolean;
@@ -71,7 +63,6 @@ interface DeletePlatform {
 export type PlatformActions =
   | PlatformActionStart
   | FetchPlatforms
-  | PlatformActionSuccess
   | PlatformActionFail
   | CreatePlatformStart
   | CreatePlatform

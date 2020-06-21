@@ -1,15 +1,14 @@
-import Skill from "../model/skill";
-import Project from "../model/project";
+import { Project, Technique } from "../model";
 
-export const getSkillsFromProjects = (projects: Project[]): Skill[] => {
-  const newSkills: Skill[] = [];
+export const getsTechniquesFromProjects = (projects: Project[]): Technique[] => {
+  const newTechniques: Technique[] = [];
   projects.forEach((project) => {
-    project.skills.forEach((skill) => {
-      const sI = newSkills.findIndex((sk) => sk.id === skill.id);
-      if (sI < 0) {
-        newSkills.push(skill);
+    project.techniques.forEach((technique) => {
+      const tI = newTechniques.findIndex((t) => t.id === technique.id);
+      if (tI < 0) {
+        newTechniques.push(technique);
       }
     });
   });
-  return newSkills;
+  return newTechniques;
 };

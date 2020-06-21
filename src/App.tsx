@@ -13,7 +13,7 @@ import Sidebar from "./layout/sidebar/sidebar";
 import Auth from "./pages/auth/auth";
 import Dashboard from "./pages/dashboard/dashboard";
 import Notification from "./pages/notification/notification";
-import Project from "./pages/project/project";
+import Project from "./pages/Project/Project";
 import AddProject from "./pages/addProject/addProject";
 import Technology from "./pages/technology/Technology";
 import NotFound from "./pages/notFound/notFound";

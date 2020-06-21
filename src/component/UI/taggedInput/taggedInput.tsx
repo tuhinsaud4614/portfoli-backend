@@ -1,20 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import {v4 as uuid} from "uuid";
+
+import { Technique, TechnologyType } from "../../../model";
 import classes from "./taggedInput.module.css";
 import TagList from "./tagList/tagList";
-import Skill from "../../../model/skill";
 
 interface Props {
-  data: Skill[];
-  tagInputted: (skills: Skill[]) => void;
-  valueData: Skill[];
+  data: Technique[];
+  tagInputted: (techniques: Technique[]) => void;
+  valueData: Technique[];
 }
 
 const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
   const elementRef = React.createRef<HTMLDivElement>();
-  const [tags, setTags] = useState<Skill[]>(valueData);
-  const [skills, setSkills] = useState<Skill[]>(data);
+  const [tags, setTags] = useState<Technique[]>(valueData);
+  const [skills, setSkills] = useState<Technique[]>(data);
   const [isActive, setIsActive] = useState<boolean>(false);
   const [isListOpen, setIsListOpen] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -41,11 +43,15 @@ const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
     if (inputValue && e.keyCode === 13) {
       const newTags = [...tags];
       const newTagIndex = tags.findIndex(
-        (tag: Skill) =>
+        (tag: Technique) =>
           inputValue.trim().toLocaleLowerCase() === tag.name.toLocaleLowerCase()
       );
       if (newTagIndex < 0) {
-        newTags.push(new Skill(new Date().getTime().toString(), inputValue));
+        newTags.push({
+          id: uuid(),
+          name: inputValue,
+          technologyId: TechnologyType.WEB_DEVELOPMENT,
+        });
       }
       setTags(newTags);
       tagInputted(newTags);
@@ -58,7 +64,7 @@ const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
     setInputValue(tempValue);
     if (tempValue) {
       const filteredSkills = data.filter(
-        (skill: Skill) =>
+        (skill: Technique) =>
           skill.name
             .toLocaleLowerCase()
             .indexOf(tempValue.trim().toLocaleLowerCase()) !== -1
@@ -69,9 +75,9 @@ const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
     }
   };
 
-  const selectTagHandler = (value: Skill): void => {
+  const selectTagHandler = (value: Technique): void => {
     const newTags = [...tags];
-    const newTagIndex = tags.findIndex((tag: Skill) => value.id === tag.id);
+    const newTagIndex = tags.findIndex((tag: Technique) => value.id === tag.id);
     if (newTagIndex < 0) {
       newTags.push(value);
     }
@@ -83,7 +89,7 @@ const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
   };
 
   const removeTagHandler = (id: string): void => {
-    const updatedTags = tags.filter((tag: Skill) => tag.id !== id);
+    const updatedTags = tags.filter((tag: Technique) => tag.id !== id);
     setTags(updatedTags);
     tagInputted(updatedTags);
   };
@@ -102,7 +108,7 @@ const TaggedInput: React.FC<Props> = ({ data, tagInputted, valueData }) => {
         }`}
       >
         {tags.length >= 0
-          ? tags.map((item: Skill) => {
+          ? tags.map((item: Technique) => {
               return (
                 <span className={`badge ${classes.Tag} m-1 p-2`} key={item.id}>
                   <span className="mr-3">{item.name}</span>

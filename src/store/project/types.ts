@@ -1,11 +1,9 @@
-import Project from "../../model/project";
-// import Skill from "../../model/skill";
+import { Platform, Technique, Project } from "../../model";
 
 // Project Action Types
 export enum ProjectActionTypes {
   PROJECTS_ACTION_START = "PROJECTS_ACTION_START",
   FETCH_PROJECTS = "FETCH_PROJECTS",
-  PROJECTS_ACTION_SUCCESS = "PROJECTS_ACTION_SUCCESS",
   PROJECTS_ACTION_FAIL = "PROJECTS_ACTION_FAIL",
   CREATE_PROJECT = "CREATE_PROJECT",
   DELETE_PROJECT = "DELETE_PROJECT",
@@ -23,7 +21,9 @@ export enum ProjectErrorTypes {
 // Project State
 export interface ProjectState {
   projects: Project[];
-  isLoading: boolean;
+  platforms: Platform[];
+  techniques: Technique[];
+  loading: boolean;
   error: ProjectErrorTypes | null;
 }
 
@@ -35,13 +35,11 @@ interface ProjectsActionStart {
 
 interface FetchProject {
   type: typeof ProjectActionTypes.FETCH_PROJECTS;
-  payload: Project[];
-}
-
-interface ProjectsActionSuccess {
-  type: typeof ProjectActionTypes.PROJECTS_ACTION_SUCCESS;
-  loading: boolean;
-  error: null;
+  payload: {
+    projects: Project[];
+    platforms: Platform[];
+    techniques: Technique[];
+  };
 }
 
 interface ProjectsActionFail {
@@ -68,7 +66,6 @@ interface UpdateProject {
 export type ProjectActions =
   | ProjectsActionStart
   | FetchProject
-  | ProjectsActionSuccess
   | ProjectsActionFail
   | CreateProject
   | DeleteProject

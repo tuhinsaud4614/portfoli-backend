@@ -19,14 +19,10 @@ export default function reducer(
       return {
         ...state,
         platforms: action.payload,
+        isFetching: false,
+        error: null,
       };
-    case PlatformActionTypes.PLATFORMS_ACTION_SUCCESS:
-      return {
-        ...state,
-        isFetching: action.isFetching,
-        isAdding: action.isAdding,
-        error: action.error,
-      };
+
     case PlatformActionTypes.PLATFORMS_ACTION_FAIL:
       return {
         ...state,
@@ -45,12 +41,19 @@ export default function reducer(
       return {
         ...state,
         platforms: [...state.platforms, action.platform],
+        isAdding: false,
+        error: null,
       };
     case PlatformActionTypes.DELETE_PLATFORM:
       const newPlatforms = state.platforms.filter(
         (value: Platform) => value.id !== action.id
       );
-      return { ...state, platforms: newPlatforms };
+      return {
+        ...state,
+        platforms: newPlatforms,
+        isFetching: false,
+        error: null,
+      };
 
     default:
       return state;

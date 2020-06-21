@@ -4,7 +4,6 @@ import { Technique } from "../../model";
 export enum TechniqueActionTypes {
   FETCH_TECHNIQUES = "FETCH_TECHNIQUES",
   TECHNIQUES_ACTION_START = "TECHNIQUES_ACTION_START",
-  TECHNIQUES_ACTION_SUCCESS = "TECHNIQUES_ACTION_SUCCESS",
   TECHNIQUES_ACTION_FAIL = "TECHNIQUES_ACTION_FAIL",
   CREATE_TECHNIQUE = "CREATE_TECHNIQUE",
   DELETE_TECHNIQUE = "DELETE_TECHNIQUE",
@@ -39,13 +38,6 @@ interface FetchTechniques {
   payload: Technique[];
 }
 
-interface TechniqueActionSuccess {
-  type: typeof TechniqueActionTypes.TECHNIQUES_ACTION_SUCCESS;
-  isFetching: boolean;
-  isAdding: boolean;
-  error: null;
-}
-
 interface TechniqueActionFail {
   type: typeof TechniqueActionTypes.TECHNIQUES_ACTION_FAIL;
   isFetching: boolean;
@@ -71,7 +63,6 @@ interface DeleteTechnique {
 export type TechniqueActions =
   | TechniqueActionStart
   | FetchTechniques
-  | TechniqueActionSuccess
   | TechniqueActionFail
   | CreateTechniqueStart
   | CreateTechnique
