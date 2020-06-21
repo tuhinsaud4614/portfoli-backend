@@ -10,6 +10,10 @@ const initialState: TechniqueState = {
   isFetching: false,
   isAdding: false,
   error: null,
+  typeError: {
+    type: null,
+    msg: null,
+  },
 };
 
 export default function reducer(
@@ -33,6 +37,13 @@ export default function reducer(
         isAdding: action.isAdding,
         error: action.error,
       };
+    case TechniqueActionTypes.TECHNIQUES_TYPE_ACTION_FAIL:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        isAdding: action.isAdding,
+        typeError: action.error,
+      };
 
     case TechniqueActionTypes.CREATE_TECHNIQUE_START:
       return {
@@ -46,6 +57,10 @@ export default function reducer(
         techniques: [...state.techniques, action.technique],
         isAdding: false,
         error: null,
+        typeError: {
+          msg: null,
+          type: null,
+        },
       };
     case TechniqueActionTypes.DELETE_TECHNIQUE:
       const newTechniques = state.techniques.filter(
@@ -56,6 +71,10 @@ export default function reducer(
         techniques: newTechniques,
         isFetching: false,
         error: null,
+        typeError: {
+          msg: null,
+          type: null,
+        },
       };
 
     default:

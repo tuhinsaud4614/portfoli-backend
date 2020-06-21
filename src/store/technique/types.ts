@@ -1,10 +1,11 @@
-import { Technique } from "../../model";
+import { Technique, TechnologyType } from "../../model";
 
 // TECHNIQUE Action Types
 export enum TechniqueActionTypes {
   FETCH_TECHNIQUES = "FETCH_TECHNIQUES",
   TECHNIQUES_ACTION_START = "TECHNIQUES_ACTION_START",
   TECHNIQUES_ACTION_FAIL = "TECHNIQUES_ACTION_FAIL",
+  TECHNIQUES_TYPE_ACTION_FAIL = "TECHNIQUES_TYPE_ACTION_FAIL",
   CREATE_TECHNIQUE = "CREATE_TECHNIQUE",
   DELETE_TECHNIQUE = "DELETE_TECHNIQUE",
   CREATE_TECHNIQUE_START = "CREATE_TECHNIQUE_START",
@@ -25,6 +26,10 @@ export interface TechniqueState {
   isFetching: boolean;
   isAdding: boolean;
   error: TechniqueErrorTypes | null;
+  typeError: {
+    type: TechnologyType | null;
+    msg: TechniqueErrorTypes | null;
+  };
 }
 
 // TECHNIQUE Actions
@@ -45,6 +50,16 @@ interface TechniqueActionFail {
   error: TechniqueErrorTypes;
 }
 
+interface TechniqueTypeFail {
+  type: typeof TechniqueActionTypes.TECHNIQUES_TYPE_ACTION_FAIL;
+  isFetching: boolean;
+  isAdding: boolean;
+  error: {
+    type: TechnologyType;
+    msg: TechniqueErrorTypes;
+  };
+}
+
 interface CreateTechniqueStart {
   type: typeof TechniqueActionTypes.CREATE_TECHNIQUE_START;
   isAdding: boolean;
@@ -63,6 +78,7 @@ interface DeleteTechnique {
 export type TechniqueActions =
   | TechniqueActionStart
   | FetchTechniques
+  | TechniqueTypeFail
   | TechniqueActionFail
   | CreateTechniqueStart
   | CreateTechnique

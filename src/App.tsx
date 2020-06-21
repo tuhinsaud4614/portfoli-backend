@@ -7,17 +7,17 @@ import {
 } from "react-router-dom";
 
 import "./App.css";
-import RoutePathName from "./pages/routePathName";
-import Header from "./layout/header/header";
-import Sidebar from "./layout/sidebar/sidebar";
-import Auth from "./pages/auth/auth";
-import Dashboard from "./pages/dashboard/dashboard";
-import Notification from "./pages/notification/notification";
+import RoutePathName from "./routePathName";
+import Header from "./layout/Header/Header";
+import Sidebar from "./layout/Sidebar/Sidebar";
+import Auth from "./pages/Auth/Auth";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Notification from "./pages/Notification/Notification";
 import Project from "./pages/Project/Project";
-import AddProject from "./pages/addProject/addProject";
-import Technology from "./pages/technology/Technology";
-import NotFound from "./pages/notFound/notFound";
-import EditProject from "./pages/editProject/editProject";
+import AddProject from "./pages/AddProject/AddProject";
+import Technology from "./pages/Technology/Technology";
+import NotFound from "./pages/NotFound/NotFound";
+import EditProject from "./pages/EditProject/EditProject";
 
 const App: React.FC = () => (
   <Router>

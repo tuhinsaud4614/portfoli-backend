@@ -24,6 +24,19 @@ export const platformsActionFail = (
   error: msg,
 });
 
+export const platformsTypeActionFail = (
+  type: TechnologyType,
+  msg: PlatformErrorTypes
+): PlatformActions => ({
+  type: PlatformActionTypes.PLATFORMS_TYPE_ACTION_FAIL,
+  isAdding: false,
+  isFetching: false,
+  error: {
+    type: type,
+    msg: msg,
+  },
+});
+
 export const createPlatformStart = (): PlatformActions => ({
   type: PlatformActionTypes.CREATE_PLATFORM_START,
   isAdding: true,
@@ -52,12 +65,17 @@ export const fetchPlatforms = () => {
   };
 };
 
-export const createPlatform = (value: string, technologyType: TechnologyType) => {
+export const createPlatform = (
+  value: string,
+  technologyType: TechnologyType
+) => {
   return async (dispatch: Dispatch, getState: () => AppState) => {
     dispatch(createPlatformStart());
     try {
       const langFindIndex = getState().platforms.platforms.findIndex(
-        (p) => p.name.toLowerCase() === value.toLowerCase()
+        (p) =>
+          p.name.toLowerCase() === value.toLowerCase() &&
+          p.technologyId === technologyType
       );
       if (langFindIndex < 0) {
         const response = await axios.post(
@@ -76,16 +94,24 @@ export const createPlatform = (value: string, technologyType: TechnologyType) =>
         );
       } else {
         dispatch(
-          platformsActionFail(PlatformErrorTypes.PLATFORM_ALREADY_EXIST_ERROR)
+          platformsTypeActionFail(
+            technologyType,
+            PlatformErrorTypes.PLATFORM_ALREADY_EXIST_ERROR
+          )
         );
       }
     } catch (error) {
-      dispatch(platformsActionFail(PlatformErrorTypes.PLATFORM_CREATION_ERROR));
+      dispatch(
+        platformsTypeActionFail(
+          technologyType,
+          PlatformErrorTypes.PLATFORM_CREATION_ERROR
+        )
+      );
     }
   };
 };
 
-export const deletePlatform = (id: string) => {
+export const deletePlatform = (id: string, technologyType: TechnologyType) => {
   return async (dispatch: Dispatch) => {
     dispatch(platformsActionStart());
     try {
@@ -99,7 +125,12 @@ export const deletePlatform = (id: string) => {
     } catch (error) {
       console.log("error", error);
 
-      dispatch(platformsActionFail(PlatformErrorTypes.PLATFORM_DELETING_ERROR));
+      dispatch(
+        platformsTypeActionFail(
+          technologyType,
+          PlatformErrorTypes.PLATFORM_DELETING_ERROR
+        )
+      );
     }
   };
 };

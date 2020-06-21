@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import validator from "validator";
 
 import { Technique, Project, Platform } from "../../../model";
-import Input from "../../../component/UI/input/input";
-import Button from "../../../component/UI/button/button";
-import TaggedInput from "../../../component/UI/taggedInput/taggedInput";
-import ProgressIndicator from "../../../component/UI/progressIndicator/progressIndicator";
+import Input from "../../UI/input/input";
+import Button from "../../UI/button/button";
+import TaggedInput from "../../UI/taggedInput/taggedInput";
+import ProgressIndicator from "../../UI/progressIndicator/progressIndicator";
 import classes from "./projectForm.module.css";
 
 interface FormConfig {

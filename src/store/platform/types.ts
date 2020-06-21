@@ -1,10 +1,11 @@
-import { Platform } from "../../model";
+import { Platform, TechnologyType } from "../../model";
 
 // PLATFORM Action Types
 export enum PlatformActionTypes {
   FETCH_PLATFORMS = "FETCH_PLATFORMS",
   PLATFORMS_ACTION_START = "PLATFORMS_ACTION_START",
   PLATFORMS_ACTION_FAIL = "PLATFORMS_ACTION_FAIL",
+  PLATFORMS_TYPE_ACTION_FAIL = "PLATFORMS_TYPE_ACTION_FAIL",
   CREATE_PLATFORM = "CREATE_PLATFORM",
   DELETE_PLATFORM = "DELETE_PLATFORM",
   CREATE_PLATFORM_START = "CREATE_PLATFORM_START",
@@ -25,6 +26,10 @@ export interface PlatformState {
   isFetching: boolean;
   isAdding: boolean;
   error: PlatformErrorTypes | null;
+  typeError: {
+    type: TechnologyType | null;
+    msg: PlatformErrorTypes | null;
+  };
 }
 
 // PLATFORM Actions
@@ -43,6 +48,16 @@ interface PlatformActionFail {
   isFetching: boolean;
   isAdding: boolean;
   error: PlatformErrorTypes;
+}
+
+interface PlatformTypeFail {
+  type: typeof PlatformActionTypes.PLATFORMS_TYPE_ACTION_FAIL;
+  isFetching: boolean;
+  isAdding: boolean;
+  error: {
+    type: TechnologyType;
+    msg: PlatformErrorTypes;
+  };
 }
 
 interface CreatePlatformStart {
@@ -64,6 +79,7 @@ export type PlatformActions =
   | PlatformActionStart
   | FetchPlatforms
   | PlatformActionFail
+  | PlatformTypeFail
   | CreatePlatformStart
   | CreatePlatform
   | DeletePlatform;

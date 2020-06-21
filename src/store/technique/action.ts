@@ -15,6 +15,19 @@ export const techniquesActionStart = (): TechniqueActions => ({
   isFetching: true,
 });
 
+export const techniquesTypeActionFail = (
+  type: TechnologyType,
+  msg: TechniqueErrorTypes
+): TechniqueActions => ({
+  type: TechniqueActionTypes.TECHNIQUES_TYPE_ACTION_FAIL,
+  isAdding: false,
+  isFetching: false,
+  error: {
+    type: type,
+    msg: msg,
+  },
+});
+
 export const techniquesActionFail = (
   msg: TechniqueErrorTypes
 ): TechniqueActions => ({
@@ -42,7 +55,9 @@ export const fetchTechniques = () => {
         "https://react-portfolio-1a7f5.firebaseio.com/technology/techniques.json"
       );
 
-      const newTechniques = responseDataToData<TechniqueWithoutId>(response.data);
+      const newTechniques = responseDataToData<TechniqueWithoutId>(
+        response.data
+      );
       dispatch({
         type: TechniqueActionTypes.FETCH_TECHNIQUES,
         payload: newTechniques,
@@ -55,12 +70,17 @@ export const fetchTechniques = () => {
   };
 };
 
-export const createTechnique = (value: string, technologyType: TechnologyType) => {
+export const createTechnique = (
+  value: string,
+  technologyType: TechnologyType
+) => {
   return async (dispatch: Dispatch, getState: () => AppState) => {
     dispatch(createTechniqueStart());
     try {
       const techFindIndex = getState().techniques.techniques.findIndex(
-        (l) => l.name.toLowerCase() === value.toLowerCase()
+        (l) =>
+          l.name.toLowerCase() === value.toLowerCase() &&
+          l.technologyId === technologyType
       );
       if (techFindIndex < 0) {
         const response = await axios.post(
@@ -79,20 +99,24 @@ export const createTechnique = (value: string, technologyType: TechnologyType) =
         );
       } else {
         dispatch(
-          techniquesActionFail(
+          techniquesTypeActionFail(
+            technologyType,
             TechniqueErrorTypes.TECHNIQUE_ALREADY_EXIST_ERROR
           )
         );
       }
     } catch (error) {
       dispatch(
-        techniquesActionFail(TechniqueErrorTypes.TECHNIQUE_CREATION_ERROR)
+        techniquesTypeActionFail(
+          technologyType,
+          TechniqueErrorTypes.TECHNIQUE_CREATION_ERROR
+        )
       );
     }
   };
 };
 
-export const deleteTechnique = (id: string) => {
+export const deleteTechnique = (id: string, technologyType: TechnologyType) => {
   return async (dispatch: Dispatch) => {
     dispatch(techniquesActionStart());
     try {
@@ -103,14 +127,13 @@ export const deleteTechnique = (id: string) => {
         type: TechniqueActionTypes.DELETE_TECHNIQUE,
         id: id,
       });
-      // if (response.status === 200) {
-      // } else {
-      //   techniquesActionFail(TechniqueErrorTypes.TECHNIQUE_NOT_EXIST_ERROR);
-      // }
     } catch (error) {
       console.log("error", error);
       dispatch(
-        techniquesActionFail(TechniqueErrorTypes.TECHNIQUE_DELETING_ERROR)
+        techniquesTypeActionFail(
+          technologyType,
+          TechniqueErrorTypes.TECHNIQUE_DELETING_ERROR
+        )
       );
     }
   };

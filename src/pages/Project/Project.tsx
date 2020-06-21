@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchProjects, deleteProject } from "../../store/project/action";
 import { ProjectState, ProjectErrorTypes } from "../../store/project/types";
 
-import RoutePathName from "../routePathName";
-import ProgressIndicator from "../../component/UI/progressIndicator/progressIndicator";
-import DataTable from "../../component/dataTable/dataTable";
-import LinkButton from "../../component/UI/linkButton/linkButton";
+import RoutePathName from "../../routePathName";
+import ProgressIndicator from "../../shared/UI/progressIndicator/progressIndicator";
+import DataTable from "../../shared/components/DataTable/DataTable";
+import LinkButton from "../../shared/UI/linkButton/linkButton";
 import { AppState } from "../../store";
-import AlertBox from "../../component/UI/alertBox/alertBox";
+import AlertBox from "../../shared/UI/alertBox/alertBox";
 import { Project as ProjectModel, Technique } from "../../model";
 
 type ChildCmp = React.FC | string;

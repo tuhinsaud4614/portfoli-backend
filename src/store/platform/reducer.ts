@@ -6,6 +6,10 @@ const initialState: PlatformState = {
   isFetching: false,
   isAdding: false,
   error: null,
+  typeError: {
+    type: null,
+    msg: null,
+  },
 };
 
 export default function reducer(
@@ -31,6 +35,14 @@ export default function reducer(
         error: action.error,
       };
 
+    case PlatformActionTypes.PLATFORMS_TYPE_ACTION_FAIL:
+      return {
+        ...state,
+        isFetching: action.isFetching,
+        isAdding: action.isAdding,
+        typeError: action.error,
+      };
+
     case PlatformActionTypes.CREATE_PLATFORM_START:
       return {
         ...state,
@@ -43,6 +55,10 @@ export default function reducer(
         platforms: [...state.platforms, action.platform],
         isAdding: false,
         error: null,
+        typeError: {
+          msg: null,
+          type: null,
+        },
       };
     case PlatformActionTypes.DELETE_PLATFORM:
       const newPlatforms = state.platforms.filter(
@@ -53,6 +69,10 @@ export default function reducer(
         platforms: newPlatforms,
         isFetching: false,
         error: null,
+        typeError: {
+          msg: null,
+          type: null,
+        },
       };
 
     default:

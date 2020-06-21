@@ -8,7 +8,7 @@ import {
   PlatformWithoutId,
 } from "../../model";
 import { ProjectActionTypes, ProjectActions, ProjectErrorTypes } from "./types";
-import RoutePathName from "../../pages/routePathName";
+import RoutePathName from "../../routePathName";
 import { responseDataToData } from "../../utility";
 
 // const newSkills = (prevSkills: Skill[], currSkills: Skill[]) => {
